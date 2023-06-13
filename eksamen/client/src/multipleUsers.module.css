@@ -1,0 +1,117 @@
+/* Set the background color */
+body {
+    background-color: #36393f;
+  }
+  
+  /* Center the login form */
+  .login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    z-index: 1;
+    background-color: white;
+  }
+  
+  .navItem {
+    width: 15%;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border-radius: 3px;
+    font-size: 1.5rem;
+    color: black;
+  }
+  /* Style the form */
+  form {
+    background-color: #40444b;
+    color: #b9bbbe ;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Style the form title */
+  h2 {
+    color: #fff;
+    font-size: 24px;
+    margin-top: 0;
+  }
+  
+  /* Style the form fields */
+  label {
+    color: #b9bbbe;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    background-color: #fff;
+    border: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: #3f3f3f;
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  input[type="text"] {
+    margin: 0px;
+  }
+  
+  input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  /* Style the button */
+  button[type="button"] {
+    background-color: #677bc4;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    width: 70%;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #677bc4;
+  }
+  
+  .link{
+    color: #fcfdff;
+  }
