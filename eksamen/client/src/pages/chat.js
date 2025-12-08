@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import styles from "../chat.module.css";
+import { API_ENDPOINTS } from "../config";
+import { useToast, ToastContainer } from "../components/Toast";
+import Navbar from "../components/Navbar";
 
 function ChatApp({ activeChatroom }) {
   const [newMessage, setNewMessage] = useState("");
@@ -8,6 +11,7 @@ function ChatApp({ activeChatroom }) {
   const username = sessionStorage.getItem("username");
   const messagesEndRef = useRef();
   const [members, setMembers] = useState([]);
+  const { toasts, showToast, removeToast } = useToast();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,25 +25,33 @@ function ChatApp({ activeChatroom }) {
       time: timestamp,
     };
     try {
-      axios.post("http://localhost:5000/get/create", message);
+      await axios.post(API_ENDPOINTS.CHAT_CREATE, message);
+      setNewMessage("");
     } catch (error) {
-      console.log(error);
+      const errorMessage =
+        error.response?.data?.error || "Error sending message";
+      showToast(errorMessage, "error");
+      console.error("Error sending message:", error);
     }
-    setNewMessage("");
   };
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/get/messages");
+        const response = await axios.get(API_ENDPOINTS.CHAT_MESSAGES);
         const messages = response.data.map((message) => ({
           ...message,
           time: new Date(message.time).toLocaleString(),
         }));
         setChatrooms([{ id: activeChatroom, messages }]);
+        if (messagesEndRef.current) {
         messagesEndRef.current.scrollIntoView({ behavior: "instant" });
+        }
       } catch (error) {
-        console.log(error);
+        const errorMessage =
+          error.response?.data?.error || "Error fetching messages";
+        showToast(errorMessage, "error");
+        console.error("Error fetching messages:", error);
       }
     };
 
@@ -53,13 +65,16 @@ function ChatApp({ activeChatroom }) {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/user/huddly");
+        const response = await axios.get(API_ENDPOINTS.USER_HUDDLY);
         const users = response.data.map((username) => ({
           ...username,
         }));
         setMembers(users);
       } catch (error) {
-        console.log(error);
+        const errorMessage =
+          error.response?.data?.error || "Error fetching users";
+        showToast(errorMessage, "error");
+        console.error("Error fetching users:", error);
       }
     };
 
@@ -75,19 +90,16 @@ function ChatApp({ activeChatroom }) {
     sessionStorage.removeItem("isAdmin");
   }
 
+  const navbarItems = [
+    { to: "/userhome", label: "Hjem" },
+    { to: "/chat", label: "Chat" },
+    { to: "/signup", label: "Logg ut" },
+  ];
+
   return (
     <div className={styles.chatApp}>
-      <div className={styles.navbar}>
-        <div className={styles.navHome}>
-          <a href="/home">Bølger&Skvalp</a>
-        </div>
-        <div className={styles.signup}>
-          <a href="/signup">Registrer deg</a>
-        </div>
-        <div className={styles.login}>
-          <a href="/login">Logg inn</a>
-        </div>
-      </div>
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
+      <Navbar items={navbarItems} />
       <div className={styles.sidebar}>
         <div className={styles.members}>
           <h2 className={styles.chatHeader}>Bølger og Skvalp medlemmer:</h2>

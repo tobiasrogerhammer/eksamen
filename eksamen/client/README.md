@@ -2,6 +2,34 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## API Configuration
+
+This app connects to the backend API. Configure the API URL using environment variables:
+
+### Local Development
+
+Create a `.env` file in the `client/` directory:
+
+```env
+# For local development with Next.js backend (running on port 3000)
+REACT_APP_API_URL=http://localhost:3000
+
+# OR for local development with separate Express backend (running on port 5000)
+# REACT_APP_API_URL=http://localhost:5000
+```
+
+### Vercel Deployment
+
+When deploying to Vercel, set the `REACT_APP_API_URL` environment variable in Vercel dashboard:
+
+1. Go to your Vercel project settings
+2. Navigate to Environment Variables
+3. Add `REACT_APP_API_URL` with your Vercel deployment URL:
+   - Example: `https://your-portfolio.vercel.app`
+   - Or leave empty if frontend and backend are on the same domain
+
+**Note:** The API endpoints are now available at `/api/*` paths on your Vercel deployment.
+
 ## Available Scripts
 
 In the project directory, you can run:

@@ -1,45 +1,25 @@
 /* Chat app styling */
 .chatApp {
-  position: fixed;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
-  height: 100%;
-  font-family: "Roboto", sans-serif;
+  padding-top: var(--navbar-height);
+  font-family: var(--font-family-primary);
 }
 
-.navbar{
-  position: fixed;
-  width: 100%;
-  height: 10%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #7289da;
-  right: 0%;
-  top: 0%;
-}
-
-.navItem{
-  width: 15%;
-  height: 100%;
-  background-color: white;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  border-radius: 3px;
-  font-size: 1.5rem;
-  color: black;
-}
 
 /* Sidebar styling */
 .sidebar {
   display: flex;
   flex-direction: column;
-  background-color: #202225;
-  color: #dcddde;
-  padding: 16px;
-  min-width: 450px;
-  margin-top: 18%;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+  padding: var(--spacing-lg);
+  min-width: 280px;
+  max-width: 350px;
+  height: calc(100vh - var(--navbar-height));
+  position: sticky;
+  top: var(--navbar-height);
 }
 
 .meetingsMain {
@@ -110,18 +90,15 @@ li button.active {
 
 /* Chat main styling */
 .chatMain {
-  margin-left: 25%;
-  position: fixed;
-  width: 83%;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  height: 97%;
-  background-color: #36393f;
-  color: #dcddde;
-  padding: 16px;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+  padding: var(--spacing-lg);
   min-width: 250px;
-  margin-top: 9%;
+  height: calc(100vh - var(--navbar-height));
+  overflow: hidden;
 }
 
 .chatstyle {
@@ -162,7 +139,8 @@ li button.active {
   width: 95%;
 }
 
-input[type="text"] {
+.inputContainer input[type="text"],
+.chatFooter input[type="text"] {
   background-color: transparent;
   border: none;
   color: #dcddde;
@@ -175,11 +153,12 @@ input[type="text"] {
   margin-left: 50px;
 }
 
-input[type="text"]:focus {
+.inputContainer input[type="text"]:focus,
+.chatFooter input[type="text"]:focus {
   outline: none;
 }
 
-button[type="submit"] {
+.sendMessage[type="submit"] {
   height: 30px;
   width: 50px;
   background-color: #7289da;
