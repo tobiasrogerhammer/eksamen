@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "../login.module.css";
-import { NavLink } from "react-router-dom";
 import { API_ENDPOINTS } from "../config";
 import Navbar from "../components/Navbar";
 

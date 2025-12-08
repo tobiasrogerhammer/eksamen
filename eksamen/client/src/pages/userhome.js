@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "../home.module.css";
-import { NavLink } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 function UserHome() {

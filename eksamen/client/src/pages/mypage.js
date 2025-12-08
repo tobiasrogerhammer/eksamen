@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "../mypage.module.css";
-import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { API_ENDPOINTS } from "../config";
 import { useToast, ToastContainer } from "../components/Toast";
@@ -12,13 +11,7 @@ function Mypage() {
   const [fetching, setFetching] = useState(false);
   const { toasts, showToast, removeToast } = useToast();
 
-  const username = sessionStorage.getItem("username");
-
-  useEffect(() => {
-    fetchBoatSpots();
-  }, []);
-
-  const fetchBoatSpots = async () => {
+  const fetchBoatSpots = useCallback(async () => {
     setFetching(true);
     try {
       const response = await axios.get(API_ENDPOINTS.BOAT_SEE);
@@ -31,7 +24,11 @@ function Mypage() {
     } finally {
       setFetching(false);
     }
-  };
+  }, [showToast]);
+
+  useEffect(() => {
+    fetchBoatSpots();
+  }, [fetchBoatSpots]);
 
   const createBoat = async (event) => {
     event.preventDefault();

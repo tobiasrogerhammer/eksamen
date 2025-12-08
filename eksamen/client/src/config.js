@@ -1,11 +1,12 @@
 // API Configuration
 // For Vercel deployment: Set REACT_APP_API_URL environment variable to your Vercel URL
-// Example: REACT_APP_API_URL=https://your-portfolio.vercel.app
-// For local development with Next.js backend: Set to 'http://localhost:3000' (Next.js dev server)
+// Example: REACT_APP_API_URL=https://your-app.vercel.app/api
 // For local development with separate Express backend: Set to 'http://localhost:5000'
 //
 // Default: Empty string (relative paths) - works when frontend and backend are on same domain
-export const API_BASE_URL = process.env.REACT_APP_API_URL || "";
+// When REACT_APP_API_URL is set, it should include /api prefix for Vercel deployments
+const baseUrl = process.env.REACT_APP_API_URL || "";
+export const API_BASE_URL = baseUrl;
 
 // API Endpoints
 export const API_ENDPOINTS = {

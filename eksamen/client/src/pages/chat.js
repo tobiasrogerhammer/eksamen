@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import styles from "../chat.module.css";
 import { API_ENDPOINTS } from "../config";
@@ -60,7 +60,7 @@ function ChatApp({ activeChatroom }) {
     return () => {
       clearInterval(intervalId);
     };
-  }, [activeChatroom]);
+  }, [activeChatroom, showToast]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -83,7 +83,7 @@ function ChatApp({ activeChatroom }) {
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  }, [showToast]);
 
   function logout() {
     sessionStorage.removeItem("username");

@@ -1,24 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "../mypage.module.css";
-import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { API_ENDPOINTS } from "../config";
 import { useToast, ToastContainer } from "../components/Toast";
 import Navbar from "../components/Navbar";
 
 function PoliceInfo() {
-  const [boatSpots, setBoatSpots] = useState([]);
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(false);
   const { toasts, showToast, removeToast } = useToast();
 
-  useEffect(() => {
-    fetchRecords();
-    fetchBoatSpots();
-  }, []);
-
-  const fetchRecords = async () => {
+  const fetchRecords = useCallback(async () => {
     setFetching(true);
     try {
       const response = await axios.get(API_ENDPOINTS.RECORD_FIND);
@@ -31,19 +24,11 @@ function PoliceInfo() {
     } finally {
       setFetching(false);
     }
-  };
+  }, [showToast]);
 
-  const fetchBoatSpots = async () => {
-    try {
-      const response = await axios.get(API_ENDPOINTS.BOAT_SEE);
-      setBoatSpots(response.data);
-    } catch (error) {
-      const errorMessage =
-        error.response?.data?.error || "Error fetching boat spots";
-      showToast(errorMessage, "error");
-      console.error("Error fetching boat spots:", error);
-    }
-  };
+  useEffect(() => {
+    fetchRecords();
+  }, [fetchRecords]);
 
   const createRecord = async (event) => {
     event.preventDefault();

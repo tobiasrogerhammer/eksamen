@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styles from "../adminpage.module.css";
-import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { API_ENDPOINTS } from "../config";
 import { useToast, ToastContainer } from "../components/Toast";
@@ -14,16 +13,7 @@ function Adminpage() {
   const [loading, setLoading] = useState(false);
   const { toasts, showToast, removeToast } = useToast();
 
-  useEffect(() => {
-    fetchUsers();
-    fetchBoats();
-    const intervalId = setInterval(fetchUsers, 10000);
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
-
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const response = await axios.get(API_ENDPOINTS.ADMIN_SEE_USERS);
       const users = response.data.map((user) => ({
@@ -39,9 +29,9 @@ function Adminpage() {
       showToast(errorMessage, "error");
       console.error("Error fetching users:", error);
     }
-  };
+  }, [showToast]);
 
-  const fetchBoats = async () => {
+  const fetchBoats = useCallback(async () => {
     try {
       const response = await axios.get(API_ENDPOINTS.BOAT_SEE);
       const boats = response.data;
@@ -52,7 +42,16 @@ function Adminpage() {
       showToast(errorMessage, "error");
       console.error("Error fetching boats:", error);
     }
-  };
+  }, [showToast]);
+
+  useEffect(() => {
+    fetchUsers();
+    fetchBoats();
+    const intervalId = setInterval(fetchUsers, 10000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [fetchUsers, fetchBoats]);
 
   const updateUserStatus = async (userId, isAdmin) => {
     try {

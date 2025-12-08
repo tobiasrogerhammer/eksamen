@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import styles from "../meeting.module.css";
-import { NavLink } from "react-router-dom";
 import { API_ENDPOINTS } from "../config";
 import { useToast, ToastContainer } from "../components/Toast";
 import Navbar from "../components/Navbar";
@@ -136,7 +135,7 @@ function Meeting() {
     }
   };
 
-  const fetchMeetings = async () => {
+  const fetchMeetings = useCallback(async () => {
     try {
       const response = await axios.get(API_ENDPOINTS.MEETING_FETCH);
       const meetings = response.data.map((meeting) => ({
@@ -151,7 +150,7 @@ function Meeting() {
       showToast(errorMessage, "error");
       console.error("Error fetching meetings:", error);
     }
-  };
+  }, [showToast]);
 
   useEffect(() => {
     fetchMeetings();
@@ -159,7 +158,7 @@ function Meeting() {
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  }, [fetchMeetings]);
 
   const navbarItems = [
     { to: "/home", label: "Hjem" },

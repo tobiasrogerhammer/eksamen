@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "../multipleUsers.module.css";
-import { NavLink } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { API_ENDPOINTS } from "../config";
 import { useToast, ToastContainer } from "../components/Toast";
